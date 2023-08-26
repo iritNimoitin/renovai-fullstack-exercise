@@ -1,0 +1,69 @@
+{
+    "assignmentsColumns": [
+        {
+            "field": "driver",
+            "headerName": "driver",
+            "width": 150,
+            "editable": true,
+            "flex": 1
+        },
+        { "field": "id", "headerName": "Task id", "width": 90, "flex": 1 },
+        {
+            "field": "day1",
+            "headerName": "Day 1",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day2",
+            "headerName": "Day 2",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day3",
+            "headerName": "Day 3",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day4",
+            "headerName": "Day 4",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day5",
+            "headerName": "Day 5",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day6",
+            "headerName": "Day 6",
+            "width": 150,
+            "flex": 1
+        },
+        {
+            "field": "day7",
+            "headerName": "Day 7",
+            "width": 150,
+            "flex": 1
+        }
+    ],
+    "driversColumns": [
+        {
+          "field": "name",
+          "headerName": "name",
+          "width": 150,
+          "flex": 1
+        },
+        { "field": "id", "headerName": "id", "width": 90, "flex": 1 },
+        {
+          "field": "actions",
+          "headerName": "Actions",
+          "width": 150,
+          "flex": 1
+        }
+      ]
+}
