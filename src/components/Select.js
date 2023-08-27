@@ -39,8 +39,8 @@ export default function SelectBasic({options, label, params, dispatchSelectActio
             }}
             onClick={(event) => {
                 //send request to server
-              // dispatch(props.dispatchUnselectAction(value));
-              setValue(null);
+              dispatchSelectAction(params.id, null, setValue)
+              // setValue(null);
               action.current?.focusVisible();
             }}
           >

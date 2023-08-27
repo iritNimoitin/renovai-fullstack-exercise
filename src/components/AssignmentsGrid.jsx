@@ -9,8 +9,6 @@ import { driversSelector, tasksSelector } from "../store/selectors";
 import axios from "axios";
 import { setConnections } from "../store/actions/actions";
 
-
-
 export default function AssignmentsGrid() {
   const dispatch = useDispatch();
   const { tasks } = useSelector(tasksSelector);
@@ -21,7 +19,7 @@ export default function AssignmentsGrid() {
 
   const requestToassignDriverToTask = async (taskId, driver, callback)=>{
     try {
-      const res  = await axios.post("http://localhost:3001/api/connections/assignDriverToTask", {driverId: driver.id, taskId});
+      const res  = await axios.post("http://localhost:3001/api/connections/assignDriverToTask", {driverId: driver?.id, taskId});
       const newMap = res.data;
       dispatch(setConnections(newMap))
       callback(driver);
@@ -45,9 +43,9 @@ export default function AssignmentsGrid() {
   }
   const options = buildOptions();
   const assignmentsColumns = config.assignmentsColumns
-  setColumns([...assignmentsColumns, {...assignmentsColumns.find(column => column.field === "driver"), renderCell: (params) => (
+  setColumns([{...assignmentsColumns.find(column => column.field === "driver"), renderCell: (params) => (
     <SelectBasic label={"Add Driver"} params={params} options={options} dispatchSelectAction={requestToassignDriverToTask} dispatchUnselectAction={(newValue) => {}}/>
-)}]);
+)}, ...assignmentsColumns.filter((column) => column.field !== "driver")]);
   }, [drivers])
 
   useEffect(() => {
