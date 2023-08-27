@@ -27,7 +27,7 @@ export default function AssignmentsGrid() {
         ...columns.find((column) => column.field === "driver"),
         renderCell: (params) => {
 
-          let defaultValue;
+          let defaultValue = null;
           if (connections[params.id]) {
             defaultValue = drivers.find((driver) => driver.id === connections[params.id]);
           }

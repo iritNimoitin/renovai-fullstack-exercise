@@ -37,7 +37,7 @@ export default function DriversGrid() {
       {
         ...columns.find((column) => column.field === "actions"),
         renderCell: (params) => {
-          let defaultValue;
+          let defaultValue = null;
           for (const [key, value] of Object.entries(connections)) {
             if (value === params.id ) {
               defaultValue = tasks.find((task) => task.lineDisplayId === key);
