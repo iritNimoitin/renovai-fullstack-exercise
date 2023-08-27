@@ -34,23 +34,6 @@ export default function DriversGrid () {
     )
   // }, [])
 
-  // React.useEffect(() => {
-  //   const getAndBuildDrivers = async () => {
-  //     const allDrivers = await getAllDrivers();
-
-  //     if (allDrivers) {
-  //       const newRows = allDrivers.map(driver => ({
-  //         id: driver.id,
-  //         name: driver.name,
-  //         actions: undefined,
-  //       }));
-  //       setRows(newRows);
-  //     }
-  //   };
-
-  //   getAndBuildDrivers();
-  // }, []);
-
   return (
     <div>
       <h2>Drivers</h2>

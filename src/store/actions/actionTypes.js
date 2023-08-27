@@ -2,7 +2,6 @@ const ActionTypes = {
     counter: { inc: "inc" },
     drivers: {
       setDrivers:"setDrivers",
-      requestDrivers: "requestDrivers",
     },
     tasks: {
       setTasks: "setTasks",

@@ -14,9 +14,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.counter.inc:
       return { ...state, counter: state.counter + 1 };
-      case ActionTypes.drivers.setDrivers:
-        return { ...state, drivers: action.payload };
-
+    case ActionTypes.drivers.setDrivers:
+      return { ...state, drivers: action.payload };
+    case ActionTypes.tasks.setTasks:
+      return { ...state, tasks: action.payload };
 
     default:
       return state;
