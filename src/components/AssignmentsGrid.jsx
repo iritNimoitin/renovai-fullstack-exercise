@@ -9,11 +9,28 @@ import store from '../store/store';
 export default function AssignmentsGrid() {
     const dispatch = useDispatch();
     const [rows, setRows] = React.useState([]);
-    const columns = config.assignmentsColumns;
-    const driverColumn = columns.find(column => column.field === "driver") || {};
-    driverColumn.renderCell = (params) => (
-        <SelectBasic label={"Add Driver"} options={["a","b","c"]}/>
-    )
+
+    // React.useEffect(() => {
+        const buildOptions = () => {
+            const drivers = [];//redux
+            const options = [];
+            for (const driver of drivers){
+                const option = {
+                    id: driver.id,
+                    label: driver.name,
+                    value: driver
+                }
+                options.push(option);
+            }
+            return options;
+        }
+        const options = buildOptions();
+        const columns = config.assignmentsColumns;
+        const driverColumn = columns.find(column => column.field === "driver") || {};
+        driverColumn.renderCell = (params) => (
+            <SelectBasic label={"Add Driver"} options={options} dispatchSelectAction={(newValue) => {}} dispatchUnselectAction={(newValue) => {}}/>
+        )
+    // }, [])
 
     const handleSubscriptionUpdate = () => {
     

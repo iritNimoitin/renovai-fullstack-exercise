@@ -3,14 +3,17 @@ import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
 import IconButton from '@mui/joy/IconButton';
 import CloseRounded from '@mui/icons-material/CloseRounded';
+import { useDispatch } from 'react-redux';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function SelectBasic(props) {
+    const dispatch = useDispatch();
   const [value, setValue] = useState(null);
   const action = useRef(null);
   const buildOptions = (options) => {
     const allOptions = [];
     for(const option of options) {
-        allOptions.push(<Option key={option} value={option}>{option}</Option>)
+        allOptions.push(<Option key={option.id} value={option.value}>{option.label}</Option>)
     }
     return allOptions;
   }
@@ -19,8 +22,11 @@ export default function SelectBasic(props) {
       action={action}
       value={value}
       placeholder={props.label}
-      onChange={(e, newValue) => {
+      size="sm"
+  variant="outlined"
+      onChange={(event, newValue) => {
         //send request to server
+        // dispatch(props.dispatchSelectAction(newValue));
         setValue(newValue)
     }}
       {...(value && {
@@ -34,8 +40,9 @@ export default function SelectBasic(props) {
               // stops the popup from appearing when this button is clicked
               event.stopPropagation();
             }}
-            onClick={() => {
+            onClick={(event) => {
                 //send request to server
+              // dispatch(props.dispatchUnselectAction(value));
               setValue(null);
               action.current?.focusVisible();
             }}
