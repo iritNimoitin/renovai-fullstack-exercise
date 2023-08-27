@@ -4,7 +4,7 @@ export const initialState = {
   counter: 1,
   drivers: [],
   tasks: [],
-  connections: [],
+  connections: {},
 };
 
 const reducer = (state = initialState, action) => {

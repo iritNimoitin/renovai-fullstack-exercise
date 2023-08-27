@@ -2,12 +2,19 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import AssignmentsGrid from "./components/AssignmentsGrid";
 import DriversGrid from "./components/DriversGrid";
-import { setDrivers, setTasks } from "./store/actions/actions";
+import { setConnections, setDrivers, setTasks } from "./store/actions/actions";
 import { useEffect } from "react";
 import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
+
+  const fetchConnections = async () => {
+    const res = await axios.get(
+      "http://localhost:3001/api/connections/getConnections"
+    );
+    dispatch(setConnections(res.data));
+  };
 
   const fetchDrivers = async () => {
     const res = await axios.get(
@@ -26,6 +33,7 @@ function App() {
   useEffect(() => {
     fetchTasks();
     fetchDrivers();
+    fetchConnections();
   }, []);
 
   return (

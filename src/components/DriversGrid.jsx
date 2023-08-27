@@ -32,30 +32,29 @@ export default function DriversGrid() {
   }, [drivers]);
 
   useEffect(() => {
-    for (const [key, value] of Object.entries(connections)) {
-      setColumns([
-        ...columns.filter((column) => column.field !== "actions"),
-        {
-          ...columns.find((column) => column.field === "actions"),
-          renderCell: (params) => {
-            let defaultValue;
-            if (params.id === value) {
+    setColumns([
+      ...columns.filter((column) => column.field !== "actions"),
+      {
+        ...columns.find((column) => column.field === "actions"),
+        renderCell: (params) => {
+          let defaultValue;
+          for (const [key, value] of Object.entries(connections)) {
+            if (value === params.id ) {
               defaultValue = tasks.find((task) => task.lineDisplayId === key);
             }
-            return (
-              <SelectBasic
-                label={"Add Task"}
-                params={params}
-                defaultValue={defaultValue}
-                options={buildOptions()}
-                dispatchSelectAction={requestToassignDriverToTask}
-              />
-            );
-          },
+          }
+          return (
+            <SelectBasic
+              label={"Add Task"}
+              params={params}
+              defaultValue={defaultValue}
+              options={buildOptions()}
+              dispatchSelectAction={requestToassignDriverToTask}
+            />
+          );
         },
-      ]);
-      rows.find((row) => row.id === value);
-    }
+      },
+    ]);
   }, [connections]);
 
   const requestToassignDriverToTask = async (driverId, task, callback) => {

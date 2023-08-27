@@ -22,30 +22,28 @@ export default function AssignmentsGrid() {
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    for (const [key, value] of Object.entries(connections)) {
-      setColumns([
-        {
-          ...columns.find((column) => column.field === "driver"),
-          renderCell: (params) => {
-            let defaultValue;
-            if (params.id === key) {
-              defaultValue = drivers.find((driver) => driver.id === value);
-            }
-            return (
-              <SelectBasic
-                label={"Add Driver"}
-                params={params}
-                defaultValue={defaultValue}
-                options={buildOptions()}
-                dispatchSelectAction={requestToassignDriverToTask}
-              />
-            );
-          },
+    setColumns([
+      {
+        ...columns.find((column) => column.field === "driver"),
+        renderCell: (params) => {
+
+          let defaultValue;
+          if (connections[params.id]) {
+            defaultValue = drivers.find((driver) => driver.id === connections[params.id]);
+          }
+          return (
+            <SelectBasic
+              label={"Add Driver"}
+              params={params}
+              defaultValue={defaultValue}
+              options={buildOptions()}
+              dispatchSelectAction={requestToassignDriverToTask}
+            />
+          );
         },
-        ...columns.filter((column) => column.field !== "driver"),
-      ]);
-      rows.find((row) => row.id === value);
-    }
+      },
+      ...columns.filter((column) => column.field !== "driver"),
+    ]);
   }, [connections]);
 
   const requestToassignDriverToTask = async (taskId, driver, callback) => {
