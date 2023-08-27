@@ -1,16 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./App.css";
 import AssignmentsGrid from "./components/AssignmentsGrid";
 import DriversGrid from "./components/DriversGrid";
-import { tasksSelector, driversSelector } from "./store/selectors";
-import { getDrivers, incCounter, setDrivers, setTasks } from "./store/actions/actions";
+import { setDrivers, setTasks } from "./store/actions/actions";
 import { useEffect } from "react";
 import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
-  const { drivers } = useSelector(driversSelector);
-  const { tasks } = useSelector(tasksSelector);
 
   const fetchDrivers = async () => {
     const res = await axios.get(
@@ -30,10 +27,6 @@ function App() {
     fetchTasks();
     fetchDrivers();
   }, []);
-
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks]);
 
   return (
     <div className="App">

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
 import IconButton from '@mui/joy/IconButton';
@@ -7,12 +7,16 @@ import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 
 
-export default function SelectBasic({options, label, params, dispatchSelectAction, dispatchUnselectAction}) {
+export default function SelectBasic({options, label, params, dispatchSelectAction, defaultValue}) {
     const dispatch = useDispatch();
   const [value, setValue] = useState(null);
 
 
   const action = useRef(null);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue])
 
   return (
     <Select
@@ -40,7 +44,6 @@ export default function SelectBasic({options, label, params, dispatchSelectActio
             onClick={(event) => {
                 //send request to server
               dispatchSelectAction(params.id, null, setValue)
-              // setValue(null);
               action.current?.focusVisible();
             }}
           >

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import CreateTable from "./CreateTable";
 import config from "../configuration/config.json";
 import { getAllDrivers } from "../apiRequests/driversApi";
@@ -6,14 +12,51 @@ import { useDispatch, useSelector } from "react-redux";
 import store from "../store/store";
 import SelectBasic from "./Select";
 import { setConnections, trigerChoosingDriver } from "../store/actions/actions";
-import { driversSelector, tasksSelector } from "../store/selectors";
+import {
+  connectionsSelector,
+  driversSelector,
+  tasksSelector,
+} from "../store/selectors";
 import axios from "axios";
 
 export default function DriversGrid() {
   const dispatch = useDispatch();
   const { drivers } = useSelector(driversSelector);
   const { tasks } = useSelector(tasksSelector);
+  const { connections } = useSelector(connectionsSelector);
   const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    setRows(drivers);
+  }, [drivers]);
+
+  useEffect(() => {
+    for (const [key, value] of Object.entries(connections)) {
+      setColumns([
+        ...columns.filter((column) => column.field !== "actions"),
+        {
+          ...columns.find((column) => column.field === "actions"),
+          renderCell: (params) => {
+            let defaultValue;
+            if (params.id === value) {
+              defaultValue = tasks.find((task) => task.lineDisplayId === key);
+            }
+            return (
+              <SelectBasic
+                label={"Add Task"}
+                params={params}
+                defaultValue={defaultValue}
+                options={buildOptions()}
+                dispatchSelectAction={requestToassignDriverToTask}
+              />
+            );
+          },
+        },
+      ]);
+      rows.find((row) => row.id === value);
+    }
+  }, [connections]);
 
   const requestToassignDriverToTask = async (driverId, task, callback) => {
     try {
@@ -29,19 +72,20 @@ export default function DriversGrid() {
     }
   };
 
-  useEffect(() => {
-    const buildOptions = () => {
-      const options = [];
-      for (const task of tasks) {
-        const option = {
-          id: task.lineId,
+  const buildOptions = () => {
+    const options = [];
+    for (const task of tasks) {
+      const option = {
+        id: task.lineId,
         label: task.lineDisplayId,
         value: task,
-        };
-        options.push(option);
-      }
-      return options;
-    };
+      };
+      options.push(option);
+    }
+    return options;
+  };
+
+  useEffect(() => {
     const options = buildOptions();
     const driversColumns = config.driversColumns;
     setColumns([
@@ -54,7 +98,6 @@ export default function DriversGrid() {
             params={params}
             options={options}
             dispatchSelectAction={requestToassignDriverToTask}
-            dispatchUnselectAction={(newValue) => {}}
           />
         ),
       },
@@ -64,11 +107,7 @@ export default function DriversGrid() {
   return (
     <div>
       <h2>Drivers</h2>
-      <CreateTable
-        getRowId={(row) => row.id}
-        columns={columns}
-        rows={drivers}
-      />
+      <CreateTable getRowId={(row) => row.id} columns={columns} rows={rows} />
     </div>
   );
 }
