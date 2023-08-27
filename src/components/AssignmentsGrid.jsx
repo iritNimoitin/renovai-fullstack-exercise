@@ -24,20 +24,8 @@ const style = {
   };
 
 export default function AssignmentsGrid() {
-    // const state = useSelector((state) => state);
     const dispatch = useDispatch();
     const [selectedAssignmentRow, setSelectedAssignmentRow] = React.useState({});
-    const unsubscribe = store.subscribe(() =>{
-        const selection = store.getState().selection;
-        if(Object.keys(selection.selectedDriver).length !== 0 && Object.keys(selectedAssignmentRow).length !== 0) {
-            console.log(selectedAssignmentRow,"2222")
-            setSelectedAssignmentRow({...selectedAssignmentRow,row:{...selectedAssignmentRow.row, driver: selection.selectedDriver}});
-            dispatch(selectedDriver({}));
-        }
-        if(Object.keys(selection.selectedDriver).length === 0 && Object.keys(selection.selectedAssignment).length === 0 && selection.choosingDriverMode) {
-            dispatch(trigerChoosingDriver(false));
-        }
-      })
     const [rows, setRows] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => 
@@ -54,6 +42,25 @@ export default function AssignmentsGrid() {
             Driver
         </Button>
     )
+
+    const handleSubscriptionUpdate = () => {
+        const selection = store.getState().selection;
+            if(Object.keys(selection.selectedDriver).length !== 0 && Object.keys(selectedAssignmentRow).length !== 0) {
+                setSelectedAssignmentRow({...selectedAssignmentRow,row:{...selectedAssignmentRow.row, driver: selection.selectedDriver}});
+                dispatch(selectedDriver({}));
+            }
+            if(Object.keys(selection.selectedDriver).length === 0 && Object.keys(selectedAssignmentRow).length === 0 && selection.choosingDriverMode) {
+                dispatch(trigerChoosingDriver(false));
+            }
+    }
+
+    React.useEffect(() => {
+        const unsubscribe = store.subscribe(handleSubscriptionUpdate)
+        return () => {
+            unsubscribe();
+        }
+    }, [])
+
     React.useEffect(() => {
         const getAssignments = async () => {
             const allAssignments = await getAllAssignments();

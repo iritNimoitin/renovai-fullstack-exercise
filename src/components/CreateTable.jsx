@@ -2,11 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
-const CreateTable = React.forwardRef((props, ref) => {;
+export default function CreateTable (props) {;
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
-        ref={ref}
+        {...props}
         initialState={{
           pagination: {
             paginationModel: {
@@ -17,10 +17,7 @@ const CreateTable = React.forwardRef((props, ref) => {;
         autoHeight
         pageSizeOptions={[5]}
         disableRowSelectionOnClick
-        {...props}
       />
     </Box>
   );
-})
-
-export default CreateTable;
+}
