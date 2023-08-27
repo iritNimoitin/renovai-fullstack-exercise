@@ -1,31 +1,40 @@
-import { SELECTED_DRIVER, SELECTED_ASSIGNMENT, TRIGER_CHOOSING_DRIVER, TRIGER_CHOOSING_ASSIGNMENT } from "../actions/actionTypes";
+import ActionTypes from "./actionTypes";
 
-const selectedDriver = (driver) => {
+export const incCounter = () => {
   return {
-    type: SELECTED_DRIVER,
-    payload: driver
+    type: ActionTypes.counter.inc,
   };
 };
 
-const selectedAssignment = (assignment) => {
+export const setDrivers = (drivers)=>{
   return {
-    type: SELECTED_ASSIGNMENT,
-    payload: assignment
+    type: ActionTypes.drivers.setDrivers,
+    payload: drivers
+  };}
+
+export const getDrivers = () => {
+  return {
+    type: ActionTypes.drivers.requestDrivers,
   };
 };
 
-const trigerChoosingDriver = (choosingDriverMode) => {
-    return {
-        type: TRIGER_CHOOSING_DRIVER,
-        payload: choosingDriverMode
-    };
+export const setTasks = (tasks) => {
+  return {
+    type: ActionTypes.tasks.setTasks,
+    payload: tasks,
+  };
 };
 
-const trigerChoosingAssignment = (choosingAssignmentMode) => {
-    return {
-        type: TRIGER_CHOOSING_ASSIGNMENT,
-        payload: choosingAssignmentMode
-    };
+export const setConnections = (connections) => {
+  return {
+    type: ActionTypes.connections.setConnections,
+    payload: connections,
+  };
 };
 
-export { selectedDriver, selectedAssignment, trigerChoosingDriver, trigerChoosingAssignment };
+export const assignDriverToTask = (driverID, taskID) => {
+  return {
+    type: ActionTypes.connections.assignDriverToTask,
+    payload: { driverID, taskID },
+  };
+};

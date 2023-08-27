@@ -1,10 +1,6 @@
+import { createStore } from "redux";
+import reducers from "./reducers/reducer";
 
-import selectionReducer from './reducers/selectionReducer';
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-
-const reducer = combineReducers({
-    selection: selectionReducer
-  })
-const store = configureStore({reducer});
+const store = createStore(reducers);
 
 export default store;

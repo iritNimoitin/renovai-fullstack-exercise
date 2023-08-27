@@ -1,4 +1,17 @@
-export const SELECTED_DRIVER = "SELECTED_DRIVER";
-export const SELECTED_ASSIGNMENT = "SELECTED_ASSIGNMENT";
-export const TRIGER_CHOOSING_DRIVER = "TRIGER_CHOOSING_DRIVER";
-export const TRIGER_CHOOSING_ASSIGNMENT = "TRIGER_CHOOSING_ASSIGNMENT";
+const ActionTypes = {
+    counter: { inc: "inc" },
+    drivers: {
+      setDrivers:"setDrivers",
+      requestDrivers: "requestDrivers",
+    },
+    tasks: {
+      setTasks: "setTasks",
+    },
+    connections: {
+      setConnections: "setConnections",
+      assignDriverToTask: "assignDriverToTask",
+    },
+  };
+  
+  export default ActionTypes;
+  

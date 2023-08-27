@@ -6,14 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from '../store/store';
 import SelectBasic from './Select';
 import { trigerChoosingDriver } from '../store/actions/actions';
+import { driversSelector } from '../store/selectors';
 
 export default function DriversGrid () {
   const dispatch = useDispatch();
-  const selection = useSelector(state => state.selection);
-  const [rows, setRows] = React.useState([]);
-  const handleSubscriptionUpdate = () => {
-
-  }
+  const { drivers } = useSelector(driversSelector);
 
   // React.useEffect(() => {
     const buildOptions = () => {
@@ -37,29 +34,22 @@ export default function DriversGrid () {
     )
   // }, [])
 
-  React.useEffect(() => {
-    const unsubscribe = store.subscribe(handleSubscriptionUpdate)
-    return () => {
-        unsubscribe();
-    }
-}, [])
+  // React.useEffect(() => {
+  //   const getAndBuildDrivers = async () => {
+  //     const allDrivers = await getAllDrivers();
 
-  React.useEffect(() => {
-    const getAndBuildDrivers = async () => {
-      const allDrivers = await getAllDrivers();
+  //     if (allDrivers) {
+  //       const newRows = allDrivers.map(driver => ({
+  //         id: driver.id,
+  //         name: driver.name,
+  //         actions: undefined,
+  //       }));
+  //       setRows(newRows);
+  //     }
+  //   };
 
-      if (allDrivers) {
-        const newRows = allDrivers.map(driver => ({
-          id: driver.id,
-          name: driver.name,
-          actions: undefined,
-        }));
-        setRows(newRows);
-      }
-    };
-
-    getAndBuildDrivers();
-  }, []);
+  //   getAndBuildDrivers();
+  // }, []);
 
   return (
     <div>
@@ -67,7 +57,7 @@ export default function DriversGrid () {
       <CreateTable
         getRowId={(row) => row.id}
         columns={columns}
-        rows={rows}
+        rows={drivers}
       />
     </div>
   );
