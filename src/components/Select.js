@@ -6,22 +6,18 @@ import CloseRounded from '@mui/icons-material/CloseRounded';
 import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function SelectBasic(props) {
+export default function SelectBasic({options, label, dispatchSelectAction, dispatchUnselectAction}) {
     const dispatch = useDispatch();
   const [value, setValue] = useState(null);
+
+
   const action = useRef(null);
-  const buildOptions = (options) => {
-    const allOptions = [];
-    for(const option of options) {
-        allOptions.push(<Option key={option.id} value={option.value}>{option.label}</Option>)
-    }
-    return allOptions;
-  }
+
   return (
     <Select
       action={action}
       value={value}
-      placeholder={props.label}
+      placeholder={label}
       size="sm"
   variant="outlined"
       onChange={(event, newValue) => {
@@ -53,7 +49,7 @@ export default function SelectBasic(props) {
         indicator: null,
       })}
     >
-        {buildOptions(props.options)}
+        {options.map(option=><Option key={option.id} value={option.value}>{option.label}</Option>)}
     </Select>
   );
 }

@@ -1,5 +1,4 @@
 import ActionTypes from "../actions/actionTypes";
-import axios from "axios";
 
 export const initialState = {
   counter: 1,
@@ -7,8 +6,6 @@ export const initialState = {
   tasks: [],
   map: [],
 };
-
-const getApiUrl = (endpoint) => `http://localhost:3001/${endpoint}`;
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
