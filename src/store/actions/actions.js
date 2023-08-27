@@ -1,16 +1,11 @@
 import ActionTypes from "./actionTypes";
 
-export const incCounter = () => {
-  return {
-    type: ActionTypes.counter.inc,
-  };
-};
-
-export const setDrivers = (drivers)=>{
+export const setDrivers = (drivers) => {
   return {
     type: ActionTypes.drivers.setDrivers,
-    payload: drivers
-  };}
+    payload: drivers,
+  };
+};
 
 export const getDrivers = () => {
   return {
@@ -38,4 +33,3 @@ export const assignDriverToTask = (driverID, taskID) => {
     payload: { driverID, taskID },
   };
 };
-

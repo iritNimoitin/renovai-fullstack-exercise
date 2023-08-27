@@ -17,16 +17,12 @@ function App() {
   };
 
   const fetchDrivers = async () => {
-    const res = await axios.get(
-      "http://localhost:3001/api/drivers/getDrivers"
-    );
+    const res = await axios.get("http://localhost:3001/api/drivers/getDrivers");
     dispatch(setDrivers(res.data));
   };
 
   const fetchTasks = async () => {
-    const res = await axios.get(
-      "http://localhost:3001/api/tasks/getTasks"
-    );
+    const res = await axios.get("http://localhost:3001/api/tasks/getTasks");
     dispatch(setTasks(res.data));
   };
 

@@ -1,17 +1,12 @@
 import React, {
-  useCallback,
   useEffect,
-  useMemo,
-  useRef,
   useState,
 } from "react";
 import CreateTable from "./CreateTable";
 import config from "../configuration/config.json";
-import { getAllDrivers } from "../apiRequests/driversApi";
 import { useDispatch, useSelector } from "react-redux";
-import store from "../store/store";
 import SelectBasic from "./Select";
-import { setConnections, trigerChoosingDriver } from "../store/actions/actions";
+import { setConnections } from "../store/actions/actions";
 import {
   connectionsSelector,
   driversSelector,
@@ -26,6 +21,33 @@ export default function DriversGrid() {
   const { connections } = useSelector(connectionsSelector);
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
+
+  const requestToassignDriverToTask = async (driverId, task, callback) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/api/connections/assignDriverToTask",
+        { taskId: task?.lineDisplayId, driverId }
+      );
+      const newMap = res.data;
+      dispatch(setConnections(newMap));
+      callback(task);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const buildOptions = () => {
+    const options = [];
+    for (const task of tasks) {
+      const option = {
+        id: task.lineId,
+        label: task.lineDisplayId,
+        value: task,
+      };
+      options.push(option);
+    }
+    return options;
+  };
 
   useEffect(() => {
     setRows(drivers);
@@ -56,33 +78,6 @@ export default function DriversGrid() {
       },
     ]);
   }, [connections]);
-
-  const requestToassignDriverToTask = async (driverId, task, callback) => {
-    try {
-      const res = await axios.post(
-        "http://localhost:3001/api/connections/assignDriverToTask",
-        { taskId: task?.lineDisplayId, driverId }
-      );
-      const newMap = res.data;
-      dispatch(setConnections(newMap));
-      callback(task);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const buildOptions = () => {
-    const options = [];
-    for (const task of tasks) {
-      const option = {
-        id: task.lineId,
-        label: task.lineDisplayId,
-        value: task,
-      };
-      options.push(option);
-    }
-    return options;
-  };
 
   useEffect(() => {
     const options = buildOptions();

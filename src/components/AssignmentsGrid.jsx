@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import CreateTable from "./CreateTable";
 import config from "../configuration/config.json";
-import { getAllAssignments } from "../apiRequests/assignmentsApi";
 import { useDispatch, useSelector } from "react-redux";
 import SelectBasic from "./Select";
-import store from "../store/store";
 import {
   connectionsSelector,
   driversSelector,
@@ -20,31 +18,6 @@ export default function AssignmentsGrid() {
   const { connections } = useSelector(connectionsSelector);
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
-
-  useEffect(() => {
-    setColumns([
-      {
-        ...columns.find((column) => column.field === "driver"),
-        renderCell: (params) => {
-
-          let defaultValue = null;
-          if (connections[params.id]) {
-            defaultValue = drivers.find((driver) => driver.id === connections[params.id]);
-          }
-          return (
-            <SelectBasic
-              label={"Add Driver"}
-              params={params}
-              defaultValue={defaultValue}
-              options={buildOptions()}
-              dispatchSelectAction={requestToassignDriverToTask}
-            />
-          );
-        },
-      },
-      ...columns.filter((column) => column.field !== "driver"),
-    ]);
-  }, [connections]);
 
   const requestToassignDriverToTask = async (taskId, driver, callback) => {
     try {
@@ -72,6 +45,32 @@ export default function AssignmentsGrid() {
     }
     return options;
   };
+
+  useEffect(() => {
+    setColumns([
+      {
+        ...columns.find((column) => column.field === "driver"),
+        renderCell: (params) => {
+          let defaultValue = null;
+          if (connections[params.id]) {
+            defaultValue = drivers.find(
+              (driver) => driver.id === connections[params.id]
+            );
+          }
+          return (
+            <SelectBasic
+              label={"Add Driver"}
+              params={params}
+              defaultValue={defaultValue}
+              options={buildOptions()}
+              dispatchSelectAction={requestToassignDriverToTask}
+            />
+          );
+        },
+      },
+      ...columns.filter((column) => column.field !== "driver"),
+    ]);
+  }, [connections]);
 
   useEffect(() => {
     const options = buildOptions();
