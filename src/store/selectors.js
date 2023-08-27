@@ -12,3 +12,10 @@ export const tasksSelector = createSelector(
     tasks,
   })
 );
+
+export const connectionsSelector = createSelector(
+  (state) => state.connections,
+  (connections) => ({
+    connections,
+  })
+);

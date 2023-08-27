@@ -6,7 +6,8 @@ import CloseRounded from '@mui/icons-material/CloseRounded';
 import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function SelectBasic({options, label, dispatchSelectAction, dispatchUnselectAction}) {
+
+export default function SelectBasic({options, label, params, dispatchSelectAction, dispatchUnselectAction}) {
     const dispatch = useDispatch();
   const [value, setValue] = useState(null);
 
@@ -22,8 +23,8 @@ export default function SelectBasic({options, label, dispatchSelectAction, dispa
   variant="outlined"
       onChange={(event, newValue) => {
         //send request to server
-        // dispatch(props.dispatchSelectAction(newValue));
-        setValue(newValue)
+        dispatchSelectAction(params.id ,newValue, setValue);
+        
     }}
       {...(value && {
         // When the user has selected a value, the button is displayed, and the select indicator is removed.

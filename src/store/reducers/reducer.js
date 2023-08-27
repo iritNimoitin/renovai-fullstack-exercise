@@ -4,7 +4,7 @@ export const initialState = {
   counter: 1,
   drivers: [],
   tasks: [],
-  map: [],
+  connections: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, drivers: action.payload };
     case ActionTypes.tasks.setTasks:
       return { ...state, tasks: action.payload };
-
+      case ActionTypes.connections.setConnections:
+        return { ...state, connections: action.payload };
     default:
       return state;
   }
